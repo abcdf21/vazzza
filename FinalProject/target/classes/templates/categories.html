@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Список категорий</title>
+</head>
+<body>
+<h1>Список категорий</h1>
+<form action="/main/categories/create" method="post">
+  <input type="text" name="name" placeholder="Название" required>
+  <input type="text" name="description" placeholder="Описание" required>
+  <button type="submit">Добавить категорию</button>
+</form>
+
+<h2>Все категории:</h2>
+<ul>
+  <th:block th:each="category : ${categories}">
+    <li>
+      <span th:text="'Название: ' + ${category.name}"></span><br>
+      <span th:text="'Описание: ' + ${category.description}"></span><br>
+      <form action="/main/categories/update" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${category.id}"/>
+        <input type="text" name="name" placeholder="Название" required/>
+        <input type="text" name="description" placeholder="Описание" required/>
+        <button type="submit">Обновить</button>
+      </form>
+      <form action="/main/categories/delete" method="post" style="display:inline;">
+        <input type="hidden" name="id" th:value="${category.id}"/>
+        <button type="submit">Удалить</button>
+      </form><br>
+      <span>-----------------------------------------------------------------------------------</span><br><br>
+    </li>
+  </th:block>
+</ul>
+</body>
+</html>

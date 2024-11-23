@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+<h1>Регистрация</h1>
+<form action="/registration/addUser" method="post">
+    <input type="text" name="username" required placeholder="Логин"><br>
+
+    <div th:if="${message != null}" class="error-message">
+        <p th:text="${message}"></p>
+    </div>
+
+    <input type="password" name="password" required placeholder="Пароль"><br>
+    <button type="submit">Зарегистрироваться</button>
+</form>
+</body>
+</html>

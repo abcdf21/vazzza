@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список брендов</title>
+</head>
+<body>
+<h1>Список брендов</h1>
+<form action="/main/brands/create" method="post">
+    <input type="text" name="name" placeholder="Название" required>
+    <input type="text" name="description" placeholder="Описание" required>
+    <button type="submit">Добавить бренд</button>
+</form>
+
+<h2>Все бренды:</h2>
+<ul>
+    <th:block th:each="brand : ${brands}">
+        <li>
+            <span th:text="'Название: ' + ${brand.name}"></span><br>
+            <span th:text="'Описание: ' + ${brand.description}"></span><br>
+            <form action="/main/brands/update" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${brand.id}"/>
+                <input type="text" name="name" placeholder="Название" required/>
+                <input type="text" name="description" placeholder="Описание" required/>
+                <button type="submit">Обновить</button>
+            </form>
+            <form action="/main/brands/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${brand.id}"/>
+                <button type="submit">Удалить</button>
+            </form><br>
+            <span>-----------------------------------------------------------------------------------</span><br><br>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body>
+<h1>Список продуктов</h1>
+<ul>
+    <th:block th:each="cart : ${carts}">
+        <th:block th:if="${cart.userid == userId}">
+            <li>
+                <th:block th:each="product : ${products}">
+                    <th:block th:if="${product.id == cart.productid}">
+                        <span th:text="'Название: ' + ${product.name}"></span><br>
+                        <span th:text="'Количество: ' + ${cart.quantity}"></span><br>
+                        <span th:text="'Общая цена: ' + ${cart.price}"></span><br>
+                        <form action="/main/cart/updProduct" method="post">
+                            <input type="hidden" name="cartid" th:value="${cart.id}">
+                            <button name="action" value="+">Добавить</button>
+                            <button name="action" value="-">Убавить</button>
+                        </form>
+                    </th:block>
+                </th:block>
+            </li>
+        </th:block>
+    </th:block>
+    <form  action="/main/pay" method="get">
+        <button type="submit"> Оплатить</button>
+    </form>
+</ul>
+</body>
+</html>

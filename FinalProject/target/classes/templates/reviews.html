@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Отзывы</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    .rating {
+      display: inline-block;
+      direction: rtl;
+      unicode-bidi: bidi-override;
+    }
+
+    .rating span,
+    .rating label {
+      font-size: 30px;
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .rating span.filled {
+      color: gold;
+    }
+
+    /* Для интерактивных звездочек в форме */
+    .rating input {
+      display: none;
+    }
+
+    .rating input:checked ~ label,
+    .rating label:hover,
+    .rating label:hover ~ label {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+<h1>Отзывы:</h1>
+
+<div th:each="review : ${reviews}">
+  <div th:each="user : ${users}">
+    <div th:if="${review.productid == productID}">
+      <div th:if="${user.id == review.userid}">
+        <p><strong>Отзыв от: </strong> <span th:text="${user.username}"></span></p>
+        <p><strong>Комментарий:</strong> <span th:text="${review.comment}"></span></p>
+        <p><strong>Рейтинг:</strong></p>
+        <div class="rating">
+          <span th:classappend="${review.rating >= 5 ? 'filled' : ''}">★</span>
+          <span th:classappend="${review.rating >= 4 ? 'filled' : ''}">★</span>
+          <span th:classappend="${review.rating >= 3 ? 'filled' : ''}">★</span>
+          <span th:classappend="${review.rating >= 2 ? 'filled' : ''}">★</span>
+          <span th:classappend="${review.rating >= 1 ? 'filled' : ''}">★</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form action="/main/products/reviews/add" method="post">
+  <h1>Оцените товар:</h1>
+  <div class="rating">
+    <input type="radio" name="rating" id="star5" value="5">
+    <label for="star5" title="Отлично">★</label>
+
+    <input type="radio" name="rating" id="star4" value="4">
+    <label for="star4" title="Хорошо">★</label>
+
+    <input type="radio" name="rating" id="star3" value="3">
+    <label for="star3" title="Нормально">★</label>
+
+    <input type="radio" name="rating" id="star2" value="2">
+    <label for="star2" title="Плохо">★</label>
+
+    <input type="radio" name="rating" id="star1" value="1">
+    <label for="star1" title="Ужасно">★</label>
+  </div><br>
+  <textarea name="comment" placeholder="Введите ваш отзыв" required></textarea>
+  <input type="hidden" name="productID" th:value="${productID}">
+  <button type="submit">Отправить</button>
+</form>
+</body>
+</html>

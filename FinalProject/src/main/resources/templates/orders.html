@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+</head>
+<body>
+<h1>Ваши заказы: </h1>
+<th:block th:each="order : ${orders}">
+    <th:block th:if="${order.getUserid() == userid}">
+        <span th:text="'Номер заказа: ' + ${order.id}"></span><br>
+        <span th:text="'Дата заказа: ' + ${order.date}"></span><br>
+        <span th:text="'Общая сумма заказа' + ${order.price}"></span><br>
+        <h1>Детали заказа:</h1>
+        <th:block th:each="orderItem : ${orderItems}">
+            <th:block th:if="${orderItem.orderid == order.id}">
+                <th:block th:each="product : ${products}">
+                    <th:block th:if="${orderItem.productid == product.id}">
+                        <span th:text="'Название продукта: ' + ${product.name} + '|| Стоимость единицы продукта: ' + ${product.price} + '|| Количество заказанной продукции: ' + ${orderItem.quantity}"></span><br>
+                    </th:block>
+                </th:block>
+            </th:block>
+        </th:block>
+    </th:block>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+</head>
+<body>
+<div th:if="${isAuthorization}">
+    <h1 th:text="${currentUser.getUsername()}"></h1>
+
+    <form action="/main/profile" method="get">
+        <button type="submit">Личный кабинет</button>
+    </form>
+    <form action="/main/logout" method="get">
+        <button type="submit">Выйти из аккаунта</button>
+    </form>
+    <form action="main/products">
+        <button type="submit">Продукты</button>
+    </form>
+    <form action="/main/cart">
+        <button type="submit">Корзина</button>
+    </form>
+    <form action="/main/orders">
+        <button type="submit">Заказы</button>
+    </form>
+</div>
+ <div th:if="${!isAuthorization}">
+     <h1>Войдите в аккаунт</h1>
+ </div>
+
+</body>
+</html>

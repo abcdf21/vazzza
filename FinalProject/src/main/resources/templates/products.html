@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продуктов</title>
+</head>
+<body>
+<h1>Список продуктов</h1>
+<form action="/main/products/create" method="post">
+    <input type="text" name="name" placeholder="Название" required>
+    <input type="text" name="price" placeholder="Цена" required><br><br>
+    <label for="brand">Выберите бренд:</label>
+    <select name="brandid" id="brand" required>
+        <option value="" disabled selected>Выберите бренд</option>
+        <th:block th:each="brand : ${brands}">
+            <option th:value="${brand.id}" th:text="${brand.name}"></option>
+        </th:block>
+    </select>
+    <br><br>
+    <label for="category">Выберите категорию:</label>
+    <select name="categoryid" id="category" required>
+        <option value="" disabled selected>Выберите категорию</option>
+        <th:block th:each="category : ${categories}">
+            <option th:value="${category.id}" th:text="${category.name}"></option>
+        </th:block>
+    </select><br><br>
+    <button type="submit">Добавить продукт</button>
+</form>
+
+<h2>Все продукты:</h2>
+<ul>
+    <th:block th:each="product : ${products}">
+        <li>
+            <span th:text="'Название: ' + ${product.name}"></span><br>
+            <span th:text="'Цена: ' + ${product.price}"></span><br>
+            <th:block th:each="category : ${categories}">
+                <th:block th:if="${product.categoryid == category.id}">
+                    <span th:text="'Категория: ' + ${category.name}"></span><br>
+                </th:block>
+            </th:block>
+            <th:block th:each="brand : ${brands}">
+                <th:block th:if="${product.brandid == brand.id}">
+                    <span th:text="'Бренд: ' + ${brand.name}"></span><br><br>
+                </th:block>
+            </th:block>
+           <form action="/main/products/update" method="post" style="display:inline;">
+               <input type="hidden" name="id" th:value="${product.id}"/>
+               <input type="text" name="name" placeholder="Название" required/>
+               <input type="text" name="price" placeholder="Цена" required/><br><br>
+               <label for="brand2">Выберите бренд:</label>
+               <select name="brandid" id="brand2" required>
+                   <option value="" disabled selected>Выберите бренд</option>
+                   <th:block th:each="brand : ${brands}">
+                       <option th:value="${brand.id}" th:text="${brand.name}"></option>
+                   </th:block>
+               </select>
+               <br><br>
+               <label for="category2">Выберите категорию:</label>
+               <select name="categoryid" id="category2" required>
+                   <option value="" disabled selected>Выберите категорию</option>
+                   <th:block th:each="category : ${categories}">
+                       <option th:value="${category.id}" th:text="${category.name}"></option>
+                   </th:block>
+               </select><br><br>
+               <button type="submit">Обновить</button>
+            </form>
+            <form action="/main/products/reviews" method="get" style="display:inline;">
+                <input type="hidden" name="productID" th:value="${product.id}"/>
+                <button type="submit">Посмотреть отзывы</button>
+            </form>
+            <form action="/main/cart/add" method="post" style="display:inline;">
+                <input type="hidden" name="productID" th:value="${product.id}"/>
+                <button type="submit">Добавить в корзину</button>
+            </form>
+            <form action="/main/products/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${product.id}"/>
+                <button type="submit">Удалить</button>
+            </form><br>
+            <span>-----------------------------------------------------------------------------------</span><br><br>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>

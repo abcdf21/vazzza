@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+<h1>Личный кабинет</h1>
+<form action="/main/profile/update" method="post">
+    <input name='username' required th:value="${currentUser.getUsername()}">
+    <div th:if="${message != null}" class="error-message">
+        <p th:text="${message}"></p>
+    </div>
+    <input name='password' required  th:value ="${currentUser.getPassword()}">
+    <button type="submits">Обновить</button>
+</form>
+<form action="/main" method="get">
+    <button type="submits">Вернуться на главную</button>
+</form>
+<form action="/main/profile/delete" method="get">
+    <button type="submits">Удалить аккаунт</button>
+</form>
+</body>
+</html>
